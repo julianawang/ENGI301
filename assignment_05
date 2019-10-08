@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 """
 --------------------------------------------------------------------------
 Simple Calculator
 --------------------------------------------------------------------------
 License:   
-Copyright 2019 <NAME>
+Copyright 2019 Juliana Wang
 
 Redistribution and use in source and binary forms, with or without 
 modification, are permitted provided that the following conditions are met:
@@ -36,19 +37,20 @@ Simple calculator that will do +, -, *, / and pow
 
   - Take in two numbers
   - Take in an operator
-  - Perform calculation and output
+  - Perform calculation and output result
   - Repeat
 
 Error conditions:
   - Invalid calculation
   - Invalid number
   - Invalid operator
-  
+
   --> Results in program exit
-  
+
 --------------------------------------------------------------------------
 """
 import operator
+
 # ------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------
@@ -58,10 +60,15 @@ import operator
 # Global variables
 # ------------------------------------------------------------------------
 operators = {
-  "+" : operator.add,
-  "-" : operator.sub,
-  "*" : operator.mul,
-  "/" : operator.truediv
+    "+" : operator.add,
+    "-" : operator.sub,
+    "*" : operator.mul,
+    "/" : operator.truediv,
+    "<<": operator.lshift,
+    ">>": operator.rshift,
+    "%" : operator.mod,
+    "**": operator.pow
+    
 }
 
 # ------------------------------------------------------------------------
@@ -71,31 +78,30 @@ operators = {
 def get_user_input():
     """ Will return (number, number, operator) or (None, None, None) on error"""
     try:
-        number1 = float(input("Enter the first number: "))
-        number2 = float(input("Enter the second number:"))
-        op      = input("Enter an operator (valid operators are +, -, *, and /):")
-      
-        print(number1)
-        print(number2)
-        print(op)
+        number1 = int(input("Enter the first number:  "))
+        number2 = int(input("Enter the second number: "))
+        op      = input("Enter an operator [valid operators are +, -, *, /, << (left shift), >> (right shift), % (modulo), and ** (exponentiation)]: ")
+    
         return (number1, number2, op)
-    except Exception as e:
+    except Exception as e: 
         print(e)
-        print("Invalid input!")
-        return(None, None, None)
-    pass
-  
+        print("Invalid Input!")
+        return (None, None, None)
+
+# End def
+
 # ------------------------------------------------------------------------
 # Main script
 # ------------------------------------------------------------------------
 
 if __name__ == "__main__":
-  while True:
-    (number1, number2, op) = get_user_input()
-    if (number1 is None) or (number2 is None) or (op is None):
-      print("Program Exiting")
-      break
-    else:
-      #do the math
-      func = operators.get(op, None)
-      print(func(number1, number2))
+    while True:
+        (number1, number2, op) = get_user_input()
+
+        func = operators.get(op, None)
+        
+        if (number1 is None) or (number2 is None) or (func is None):
+            print("Program Exiting")
+            break
+        else:
+            print(func(number1, number2))
